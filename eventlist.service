@@ -1,0 +1,16 @@
+[Unit]
+Description=Hackspace Events API
+Requires=hackspace-events.socket
+ConditionFileIsExecutable=/usr/bin/gunicorn3
+
+[Service]
+WorkingDirectory={INSTALLDIR}
+ExecStart={INSTALLDIR}/server.sh
+Restart=on-failure
+User=admin
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
